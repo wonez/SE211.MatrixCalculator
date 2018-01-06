@@ -38,6 +38,8 @@ public class Screen extends JFrame implements ActionListener {
         this.br = br;
         this.bc = bc;
 
+
+        //A PANEL
         JPanel A = new JPanel(new BorderLayout());
 
         matrixA = new JPanel(new GridLayout(ar, ac));
@@ -73,8 +75,9 @@ public class Screen extends JFrame implements ActionListener {
         aCommands.add(constA);
 
         A.add(aCommands, BorderLayout.SOUTH);
+        //END OF A PANEL
 
-        //B
+        //B PANEL
         JPanel B = new JPanel(new BorderLayout());
 
         matrixB = new JPanel(new GridLayout(br, bc));
@@ -98,6 +101,7 @@ public class Screen extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Screen sc = new Screen(ar, ac, br+1,bc+1);
+                // TODO: 06/01/2018 kopiraj u novu
                 sc.setVisible(true);
                 dispose();
             }
@@ -134,11 +138,15 @@ public class Screen extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String constant = JOptionPane.showInputDialog(this, "Multiply by constant, input constant: ");
+                // TODO: 06/01/2018
             }
         });
         bCommands.add(constB);
 
         B.add(bCommands, BorderLayout.SOUTH);
+        //END OF B PANEL
+
+        //COMMANDS
         commands = new JPanel(new GridLayout(3, 3));
 
         for(int i=0; i<4; i++)
@@ -153,6 +161,7 @@ public class Screen extends JFrame implements ActionListener {
 
         for(int i=0; i<4; i++)
             commands.add(new JPanel(new BorderLayout()));
+        //END COMMANDS
 
         mainPanel = new JPanel(new GridLayout(1,3));
         mainPanel.add(A);
@@ -166,6 +175,7 @@ public class Screen extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if(e.getActionCommand().equals("+")) {
+            // TODO: 06/01/2018 kopiraj u novu
             Screen sc = new Screen(ar + 1, ac + 1, br, bc);
             sc.setVisible(true);
             dispose();
@@ -181,6 +191,13 @@ public class Screen extends JFrame implements ActionListener {
             }
         } else if (e.getActionCommand().equals("Const")){
             String constant = JOptionPane.showInputDialog(this, "Multiply by constant, input constant: ");
+            // TODO: 06/01/2018
+        } else if (e.getActionCommand().equals("A + B")){
+            // TODO: 06/01/2018
+        } else if (e.getActionCommand().equals("A - B")){
+            // TODO: 06/01/2018
+        } else if (e.getActionCommand().equals("<-->")){
+            // TODO: 06/01/2018
         }
 
     }
