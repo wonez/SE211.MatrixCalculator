@@ -6,12 +6,6 @@ import java.util.ArrayList;
 
 public class Screen extends JFrame implements ActionListener {
 
-    private JButton minusCol;
-    private JButton plusCol;
-
-    private JButton minusRow;
-    private JButton plusRow;
-
     private ArrayList<JTextField> inputsA;
     private ArrayList<JTextField> inputsB;
 
@@ -139,13 +133,26 @@ public class Screen extends JFrame implements ActionListener {
         constB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("ne radi jos");
+                String constant = JOptionPane.showInputDialog(this, "Multiply by constant, input constant: ");
             }
         });
         bCommands.add(constB);
 
         B.add(bCommands, BorderLayout.SOUTH);
-        commands = new JPanel(new BorderLayout());
+        commands = new JPanel(new GridLayout(3, 3));
+
+        for(int i=0; i<4; i++)
+            commands.add(new JPanel(new BorderLayout()));
+
+        JPanel commandButtons = new JPanel(new GridLayout(3, 1));
+        commandButtons.add(new JButton("A + B"));
+        commandButtons.add(new JButton("A - B"));
+        commandButtons.add(new JButton("<-->"));
+
+        commands.add(commandButtons);
+
+        for(int i=0; i<4; i++)
+            commands.add(new JPanel(new BorderLayout()));
 
         mainPanel = new JPanel(new GridLayout(1,3));
         mainPanel.add(A);
@@ -173,7 +180,7 @@ public class Screen extends JFrame implements ActionListener {
                 jtx.setText("");
             }
         } else if (e.getActionCommand().equals("Const")){
-            System.out.println("ner adi jos");
+            String constant = JOptionPane.showInputDialog(this, "Multiply by constant, input constant: ");
         }
 
     }
