@@ -65,10 +65,6 @@ public class Screen extends JFrame implements ActionListener {
         }
 
         commands = new JPanel();
-        JButton plusA = new JButton("+");
-        plusA.addActionListener(this);
-
-        commands.add(plusA);
 
         mainPanel = new JPanel(new GridLayout(1,3));
         mainPanel.add(matrixA);
@@ -76,15 +72,87 @@ public class Screen extends JFrame implements ActionListener {
         mainPanel.add(matrixB);
 
         add(mainPanel, BorderLayout.CENTER);
-        add(new JPanel(), BorderLayout.SOUTH);
+
+        JPanel bottomPanel = new JPanel();
+
+        JPanel matrixCommands = new JPanel(new GridLayout(1, 4));
+        JPanel aCommands = new JPanel(new GridLayout(1, 4));
+
+        JButton plusA = new JButton("+");
+        plusA.addActionListener(this);
+        aCommands.add(plusA);
+
+        JButton minusA = new JButton("-");
+        minusA.addActionListener(this);
+        aCommands.add(minusA);
+
+        JButton cleanA = new JButton("Clean");
+        cleanA.addActionListener(this);
+        aCommands.add(cleanA);
+
+        JPanel bCommands = new JPanel(new GridLayout(1, 4));
+        JButton plusB = new JButton("+");
+        plusB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Screen sc = new Screen(ar, ac, br+1,bc+1);
+                sc.setVisible(true);
+                dispose();
+            }
+        });
+        bCommands.add(plusB);
+
+
+        JButton minusB= new JButton("-");
+        minusB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(br > 1) {
+                    Screen sc = new Screen(ar, ac, br - 1, bc - 1);
+                    sc.setVisible(true);
+                    dispose();
+                }
+            }
+        });
+        bCommands.add(minusB);
+
+        JButton cleanB = new JButton("Clean");
+        cleanB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for(JTextField jtx: inputsB){
+                    jtx.setText("");
+                }
+            }
+        });
+        bCommands.add(cleanB);
+
+        matrixCommands.add(aCommands);
+        matrixCommands.add(new JPanel(new GridLayout(1,4)));
+        matrixCommands.add(bCommands);
+
+        bottomPanel.add(matrixCommands, BorderLayout.NORTH);
+        add(bottomPanel, BorderLayout.SOUTH);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        Screen sc = new Screen(ar+1, ac+1, br+1,bc+1);
-        sc.setVisible(true);
-        dispose();
+        if(e.getActionCommand().equals("+")) {
+            Screen sc = new Screen(ar + 1, ac + 1, br, bc);
+            sc.setVisible(true);
+            dispose();
+        } else if (e.getActionCommand().equals("-")){
+            if(ar > 1){
+                Screen sc = new Screen(ar-1, ac-1, br, bc);
+                sc.setVisible(true);
+                dispose();
+            }
+        } else if (e.getActionCommand().equals("Clean")){
+            for(JTextField jtx: inputsA){
+                jtx.setText("");
+            }
+        }
 
     }
 }
