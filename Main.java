@@ -4,5 +4,6 @@ public class Main {
 
         Screen sc = new Screen(3, 3, 3, 3, null, null);
         sc.setVisible(true);
+// added comment
     }
 }

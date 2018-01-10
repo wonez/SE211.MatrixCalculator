@@ -48,11 +48,11 @@ public class Screen extends JFrame implements ActionListener {
             }
         }
 
-        if(valsA != null){
+        if (valsA != null) {
 
             for (int i = 0; i < valsA.length; i++) {
                 for (int j = 0; j < valsA[i].length; j++) {
-                    if(i >= ar || j >= ac)
+                    if (i >= ar || j >= ac)
                         continue;
                     inputsA[i][j].setText(valsA[i][j].getText());
                 }
@@ -90,18 +90,18 @@ public class Screen extends JFrame implements ActionListener {
         JPanel matrixB = new JPanel(new GridLayout(br, bc));
         inputsB = new JTextField[br][bc];
 
-        for(int i=0; i< br; i++) {
-            for(int j=0; j< bc; j++) {
+        for (int i = 0; i < br; i++) {
+            for (int j = 0; j < bc; j++) {
                 JTextField jtx = new JTextField();
                 matrixB.add(jtx);
                 inputsB[i][j] = jtx;
             }
         }
 
-        if(valsB != null){
+        if (valsB != null) {
             for (int i = 0; i < valsB.length; i++) {
                 for (int j = 0; j < valsB[i].length; j++) {
-                    if(i >= br || j >= bc)
+                    if (i >= br || j >= bc)
                         continue;
                     inputsB[i][j].setText(valsB[i][j].getText());
                 }
@@ -117,7 +117,7 @@ public class Screen extends JFrame implements ActionListener {
         plusB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Screen sc = new Screen(ar, ac, br+1,bc+1, inputsA, inputsB);
+                Screen sc = new Screen(ar, ac, br + 1, bc + 1, inputsA, inputsB);
                 sc.setVisible(true);
                 dispose();
             }
@@ -125,11 +125,11 @@ public class Screen extends JFrame implements ActionListener {
         bCommands.add(plusB);
 
 
-        JButton minusB= new JButton("-");
+        JButton minusB = new JButton("-");
         minusB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(br > 1) {
+                if (br > 1) {
                     Screen sc = new Screen(ar, ac, br - 1, bc - 1, inputsA, inputsB);
                     sc.setVisible(true);
                     dispose();
@@ -142,8 +142,8 @@ public class Screen extends JFrame implements ActionListener {
         cleanB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for(JTextField jtx[]: inputsB){
-                    for(JTextField jx: jtx)
+                for (JTextField jtx[] : inputsB) {
+                    for (JTextField jx : jtx)
                         jx.setText("");
                 }
             }
@@ -166,7 +166,7 @@ public class Screen extends JFrame implements ActionListener {
         //COMMANDS
         commands = new JPanel(new GridLayout(3, 3));
 
-        for(int i=0; i<4; i++)
+        for (int i = 0; i < 4; i++)
             commands.add(new JPanel(new BorderLayout()));
 
         JPanel commandButtons = new JPanel(new GridLayout(3, 1));
@@ -176,11 +176,11 @@ public class Screen extends JFrame implements ActionListener {
 
         commands.add(commandButtons);
 
-        for(int i=0; i<4; i++)
+        for (int i = 0; i < 4; i++)
             commands.add(new JPanel(new BorderLayout()));
         //END COMMANDS
 
-        JPanel mainPanel = new JPanel(new GridLayout(1,3));
+        JPanel mainPanel = new JPanel(new GridLayout(1, 3));
         mainPanel.add(A);
         mainPanel.add(commands);
         mainPanel.add(B);
@@ -191,31 +191,39 @@ public class Screen extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if(e.getActionCommand().equals("+")) {
+        if (e.getActionCommand().equals("+")) {
             Screen sc = new Screen(ar + 1, ac + 1, br, bc, inputsA, inputsB);
             sc.setVisible(true);
             dispose();
-        } else if (e.getActionCommand().equals("-")){
-            if(ar > 1){
-                Screen sc = new Screen(ar-1, ac-1, br, bc, inputsA, inputsB);
+        } else if (e.getActionCommand().equals("-")) {
+            if (ar > 1) {
+                Screen sc = new Screen(ar - 1, ac - 1, br, bc, inputsA, inputsB);
                 sc.setVisible(true);
                 dispose();
             }
-        } else if (e.getActionCommand().equals("Clean")){
-            for(JTextField jtx[]: inputsA){
-                for(JTextField jx : jtx)
+        } else if (e.getActionCommand().equals("Clean")) {
+            for (JTextField jtx[] : inputsA) {
+                for (JTextField jx : jtx)
                     jx.setText("");
             }
-        } else if (e.getActionCommand().equals("Const")){
+        } else if (e.getActionCommand().equals("Const")) {
             String constant = JOptionPane.showInputDialog(this, "Multiply by constant, input constant: ");
-            // TODO: 06/01/2018
-        } else if (e.getActionCommand().equals("A + B")){
-            // TODO: 06/01/2018
-        } else if (e.getActionCommand().equals("A - B")){
-            // TODO: 06/01/2018
-        } else if (e.getActionCommand().equals("<-->")){
-            // TODO: 06/01/2018
-        }
+            for (JTextField jtx[] : inputsA) {
+                for (JTextField jx : jtx) {
+                    int multiplier = Integer.parseInt(constant);
+                    int factor = Integer.parseInt(jx.getText());
+                    jx.setText(multiplier * factor + "");
+                }
+            }
 
+            } else if (e.getActionCommand().equals("A + B")) {
+                // TODO: 06/01/2018
+            } else if (e.getActionCommand().equals("A - B")) {
+                // TODO: 06/01/2018
+            } else if (e.getActionCommand().equals("<-->")) {
+                // TODO: 06/01/2018
+            }
+
+        }
     }
-}
+
