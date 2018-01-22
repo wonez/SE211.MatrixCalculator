@@ -153,15 +153,23 @@ public class Screen extends JFrame implements ActionListener {
         JButton constB = new JButton("Const");
         constB.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) { //neće da radi, isti kod, al drugačije učitava parametre iz nekog razloga?
                 String constant = JOptionPane.showInputDialog(this, "Multiply by constant, input constant: ");
-                // TODO: 06/01/2018
+                for (JTextField jtx[] : inputsB) {
+                    for (JTextField jx : jtx) {
+                        int multiplier = Integer.parseInt(constant);
+                        int factor = Integer.parseInt(jx.getText());
+                        jx.setText(multiplier * factor + "");
+                    }
+                }
             }
         });
         bCommands.add(constB);
 
         B.add(bCommands, BorderLayout.SOUTH);
         //END OF B PANEL
+
+
 
         //COMMANDS
         commands = new JPanel(new GridLayout(3, 3));
@@ -217,13 +225,170 @@ public class Screen extends JFrame implements ActionListener {
             }
 
             } else if (e.getActionCommand().equals("A + B")) {
-                // TODO: 06/01/2018
-            } else if (e.getActionCommand().equals("A - B")) {
-                // TODO: 06/01/2018
-            } else if (e.getActionCommand().equals("<-->")) {
-                // TODO: 06/01/2018
-            }
 
-        }
+                JFrame R = new JFrame();
+                R.setVisible(true);
+                R.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                JPanel resultingMatrix = new JPanel(new GridLayout(br, bc));
+
+                int mA[][] = new int[ar][ac];
+                int mB[][] = new int[br][bc];
+                int tempRows = 0;
+                int tempCols = 0;
+
+                for (JTextField jtx[] : inputsA) {
+                    for (JTextField jx : jtx) {
+                        int noM = Integer.parseInt(jx.toString());
+                        tempRows++;
+                        mA[tempRows][tempCols] = noM;
+                    }
+                    tempCols++;
+                    tempRows = 0;
+                }
+
+                tempCols = 0;
+                tempRows = 0;
+
+                for (JTextField jtx[] : inputsB) {
+                    for (JTextField jx : jtx) {
+                        int noM = Integer.parseInt(jx.toString());
+                        tempRows++;
+                        mB[tempRows][tempCols] = noM;
+                    }
+                    tempCols++;
+                    tempRows = 0;
+                }
+
+                for (int i = 0; i < ar; i++) {
+                    for (int j = 0; j < ac; j++) {
+                        String temp = new String();
+                        JTextField jtx = new JTextField();
+                        temp = mA[i][j] + mB[i][j] + "";
+                        jtx.setText(temp);
+                        resultingMatrix.add(jtx);
+                    }
+                }
+
+                R.add(resultingMatrix, BorderLayout.CENTER);
+
+
+            } else if (e.getActionCommand().equals("A - B")) {
+
+                JFrame R = new JFrame();
+                R.setVisible(true);
+                R.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                JPanel resultingMatrix = new JPanel(new GridLayout(br, bc));
+
+                int mA[][] = new int[ar][ac];
+                int mB[][] = new int[br][bc];
+                int tempRows = 0;
+                int tempCols = 0;
+
+                for (JTextField jtx[] : inputsA) {
+                    for (JTextField jx : jtx) {
+                        int noM = Integer.parseInt(jx.toString());
+                        tempRows++;
+                        mA[tempRows][tempCols] = noM;
+                    }
+                    tempCols++;
+                    tempRows = 0;
+                }
+
+                tempCols = 0;
+                tempRows = 0;
+
+                for (JTextField jtx[] : inputsB) {
+                    for (JTextField jx : jtx) {
+                        int noM = Integer.parseInt(jx.toString());
+                        tempRows++;
+                        mB[tempRows][tempCols] = noM;
+                    }
+                    tempCols++;
+                    tempRows = 0;
+                }
+
+                for (int i = 0; i < ar; i++) {
+                    for (int j = 0; j < ac; j++) {
+                        String temp = new String();
+                        JTextField jtx = new JTextField();
+                        temp = mA[i][j] - mB[i][j] + "";
+                        jtx.setText(temp);
+                        resultingMatrix.add(jtx);
+                    }
+            }
+            R.add(resultingMatrix, BorderLayout.CENTER);
+
+
+            } else if (e.getActionCommand().equals("<-->")) {
+
+                int mA[][] = new int[ar][ac];
+                int mB[][] = new int[br][bc];
+                int mTemp[][] = new int[ar][bc];
+                int tempRows = 0;
+                int tempCols = 0;
+
+                for (JTextField jtx[] : inputsA) {
+                    for (JTextField jx : jtx) {
+                        int noM = Integer.parseInt(jx.toString());
+                        tempRows++;
+                        mA[tempRows][tempCols] = noM;
+                    }
+                    tempCols++;
+                    tempRows = 0;
+                }
+
+                tempCols = 0;
+                tempRows = 0;
+
+                for (JTextField jtx[] : inputsB) {
+                    for (JTextField jx : jtx) {
+                        int noM = Integer.parseInt(jx.toString());
+                        tempRows++;
+                        mB[tempRows][tempCols] = noM;
+                    }
+                    tempCols++;
+                    tempRows = 0;
+                }
+
+                for (int i=0; i<ac; i++) {
+                    for (int j=0; i<ar; i++) {
+                        mTemp[i][j] = mA[i][j];
+                    }
+                }
+
+                for (int i=0; i<ac; i++) {
+                    for (int j=0; i<ar; i++) {
+                        mA[i][j] = mB[i][j];
+                    }
+                }
+
+                for (int i=0; i<ac; i++) {
+                    for (int j=0; i<ar; i++) {
+                        mB[i][j] = mTemp[i][j];
+                    }
+                }
+
+                for (JTextField jtx[] : inputsA) {
+                    for (JTextField jx : jtx) {
+                        jx.setText(mA[tempRows][tempCols] + "");
+                        tempRows++;
+                    }
+                    tempCols++;
+                    tempRows = 0;
+                }
+
+                tempRows = 0;
+                tempCols = 0;
+
+                for (JTextField jtx[] : inputsB) {
+                    for (JTextField jx : jtx) {
+                        jx.setText(mB[tempRows][tempCols] + "");
+                        tempRows++;
+                    }
+                    tempCols++;
+                    tempRows = 0;
+                }
+            }
     }
+}
 
