@@ -17,7 +17,7 @@ public class Screen extends JFrame implements ActionListener {
 
     private JPanel commands;
 
-    public Screen(int ar, int ac, int br, int bc, JTextField valsA[][], JTextField valsB[][], JTextField valsR[][]) {
+    public Screen(int ar, int ac, int br, int bc, int rr, int rc, JTextField valsA[][], JTextField valsB[][], JTextField valsR[][]) {
 
         setSize(750, 600);
         setLayout(new GridLayout(1, 1));
@@ -120,7 +120,7 @@ public class Screen extends JFrame implements ActionListener {
         plusB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Screen sc = new Screen(ar, ac, br + 1, bc + 1, inputsA, inputsB, valuesR);
+                Screen sc = new Screen(ar, ac, br + 1, bc + 1, ar, ac,inputsA, inputsB, valuesR);
                 sc.setVisible(true);
                 dispose();
             }
@@ -133,7 +133,7 @@ public class Screen extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (br > 1) {
-                    Screen sc = new Screen(ar, ac, br - 1, bc - 1, inputsA, inputsB, valuesR);
+                    Screen sc = new Screen(ar, ac, br - 1, bc - 1,br-1, bc-1, inputsA, inputsB, valuesR);
                     sc.setVisible(true);
                     dispose();
                 }
@@ -212,15 +212,6 @@ public class Screen extends JFrame implements ActionListener {
         mainPanel.add(new JPanel());
 
         JPanel R = new JPanel(new BorderLayout());
-        int rr, rc;
-
-        if(ar < br){
-            rr = ar;
-            rc = ac;
-        } else {
-            rr = br;
-            rc = bc;
-        }
 
         JPanel matrixR = new JPanel(new GridLayout(rr, rc));
         valuesR = new JTextField[rr][rc];
@@ -259,12 +250,12 @@ public class Screen extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getActionCommand().equals("+")) {
-            Screen sc = new Screen(ar + 1, ac + 1, br, bc, inputsA, inputsB, valuesR);
+            Screen sc = new Screen(ar + 1, ac + 1, br, bc, br, bc, inputsA, inputsB, valuesR);
             sc.setVisible(true);
             dispose();
         } else if (e.getActionCommand().equals("-")) {
             if (ar > 1) {
-                Screen sc = new Screen(ar - 1, ac - 1, br, bc, inputsA, inputsB, valuesR);
+                Screen sc = new Screen(ar - 1, ac - 1, br, bc, ar-1, ac-1,inputsA, inputsB, valuesR);
                 sc.setVisible(true);
                 dispose();
             }
@@ -328,12 +319,51 @@ public class Screen extends JFrame implements ActionListener {
 
         } else if (e.getActionCommand().equals("<-->")) {
 
-            Screen sc = new Screen(br, bc , ar, ac, inputsB, inputsA, valuesR);
+            Screen sc = new Screen(br, bc , ar, ac, br, bc, inputsB, inputsA, valuesR);
             sc.setVisible(true);
             dispose();
 
         } else if (e.getActionCommand().equals("A * B")){
-            System.out.println("snovi od stakla");
+            if(ac != br){
+                JOptionPane.showMessageDialog(this,"Invalid matrices for multiplication\nNumber of columns in A needs to be equal to number of rows in B!");
+                return;
+            }
+
+            valuesR = new JTextField[ar][ac];
+
+            for (int i = 0; i < ar; i++) {
+                for (int j = 0; j < ac; j++) {
+                    JTextField jtx = new JTextField();
+                    jtx.setHorizontalAlignment(SwingConstants.CENTER);
+                    jtx.setEditable(false);
+                    valuesR[i][j] = jtx;
+                }
+            }
+
+
+            for(int i=0; i<ar; i++) {
+                for (int j = 0; j < ac; j++) {
+                    for (int k = 0; k < ac; k++) {
+
+                        String a = inputsA[i][k].getText();
+                        String b = inputsB[k][j].getText();
+                        String r = valuesR[i][j].getText();
+
+                        if (a.equals(""))
+                            a = "0";
+                        if (b.equals(""))
+                            b = "0";
+                        if (r.equals(""))
+                            r = "0";
+                        valuesR[i][j].setText(Integer.parseInt(r) + (Integer.parseInt(a) * Integer.parseInt(b)) + "");
+
+                    }
+                }
+            }
+
+            Screen sc = new Screen(ar, ar, br, bc, ar, bc, inputsA, inputsB, valuesR);
+            sc.setVisible(true);
+            dispose();
         }
     }
 }
